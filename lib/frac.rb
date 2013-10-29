@@ -1,0 +1,147 @@
+require "lib/gcd.rb"
+
+class Frac
+  include Comparable
+  attr_reader :a, :b
+   def initialize (a,b)
+    @a, @b = a, b
+   end
+
+#metodo que retorna el numerador 
+	def num
+		return @a
+	end
+#metedo que retorna el denominador 
+	def denom
+		return @b
+	end
+#Forma a/b
+	def to_s
+		"#{@a}/#{@b}"
+	end
+#Forma flotante
+def to_f
+		@a.to_f / @b.to_f 
+	end
+
+#Comprueba si son iguales dos fracciones
+	def == (other)
+		if(@a == other.num) && (@b == other.denom)
+			return true 
+		else 
+			return false
+		end
+	end
+
+#Valor absoluto	
+	def abs
+		 x = Frac.new(@a.abs, @b.abs)
+	end
+#Fraccion reciproco
+	def reciprocal
+		 x = Frac.new(@b, @a)
+	end
+#Opuesto con signo -
+	def -@
+		x = Frac.new(-@a,@b)
+	end
+
+	#Suma de fracciones
+	def +(other)
+		aux = (@b/gcd(@b,other.b)) * other.b 
+      	aux2 = ((aux/@b) * @a) + ((aux/other.b) * other.a) 
+		irre = gcd(aux2,aux)
+		temp1 = aux/irre
+		temp2 = aux2/irre
+		Frac.new(temp2,temp1)
+	end
+
+	#Resta de fracciones
+	def -(other)
+		aux = (@b/gcd(@b,other.b)) * other.b 
+      	aux2 = ((aux/@b) * @a) - ((aux/other.b) * other.a) 
+		irre = gcd(aux2,aux)
+		temp1 = aux/irre
+		temp2 = aux2/irre
+		Frac.new(temp2,temp1)
+	end
+
+
+	#Producto de fracciones
+	def * (other)
+		aux1 = @a * other.a
+		aux2 = @b * other.b
+		irre = gcd(a,b)
+		temp1 = aux1/irre
+		temp2 = aux2/irre
+		Frac.new(temp1,temp2)
+	end
+
+	#Division de fracciones
+	def / (other)
+		aux1 = @a * other.b
+		aux2 = @b * other.a
+		irre = gcd(a,b)
+		temp1 = aux1/irre
+		temp2 = aux2/irre
+		Frac.new(temp1,temp2)
+	end
+
+	#Resto de fracciones
+	def % (other)
+		 aux1 = @a * other.b
+		aux2 = @b * other.a
+		irre = gcd(a,b)
+		temp1 = aux1/irre
+		temp2 = aux2/irre
+		rest = temp1 % temp2
+		return rest 
+	end
+=begin
+	#Comprobar si fraccion es mayor que otra
+	def > (other)
+		if (self.to_f > other.to_f)
+			return true
+		else
+			return false
+		end
+	end
+
+	#Comprobar si fraccion es menor que otra
+	def < (other)
+		if (self.to_f < other.to_f)
+			return true
+		else
+			return false
+		end
+	end
+
+	#Comprobar si fraccion es mayor o igual que otra
+	def >= (other)
+		if (self.to_f >= other.to_f)
+			return true
+		else
+			return false
+		end
+	end
+
+	#Comprobar si fraccion es menor o igual que otra
+	def <= (other)
+		if (self.to_f <= other.to_f)
+			return true
+		else
+			return false
+		end
+	end
+
+=end
+
+    def <=>(other)
+	return 0 if self.to_f == other.to_f
+	return 1 if self.to_f > other.to_f
+	return -1 if self.to_f < other.to_f
+     end
+
+end
+
+ 
